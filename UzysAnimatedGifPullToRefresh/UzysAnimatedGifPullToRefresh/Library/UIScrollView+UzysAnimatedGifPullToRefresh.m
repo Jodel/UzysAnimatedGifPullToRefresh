@@ -8,7 +8,6 @@
 
 #import "UIScrollView+UzysAnimatedGifPullToRefresh.h"
 #import <objc/runtime.h>
-#import "AnimatedGIFImageSerialization.h"
 #define IS_IOS7 (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 && floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1)
 #define IS_IOS8  ([[[UIDevice currentDevice] systemVersion] compare:@"8" options:NSNumericSearch] != NSOrderedAscending)
 #define IS_IPHONE6PLUS ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) && [[UIScreen mainScreen] nativeScale] == 3.0f)
@@ -65,49 +64,6 @@ static char UIScrollViewPullToRefreshView;
     }
     
 }
-
-- (void)addPullToRefreshActionHandler:(actionHandler)handler
-                       ProgressImages:(NSArray *)progressImages
-              ProgressScrollThreshold:(NSInteger)threshold
-{
-    [self addPullToRefreshActionHandler:handler
-                         ProgressImages:progressImages
-                          LoadingImages:nil
-                ProgressScrollThreshold:threshold
-                 LoadingImagesFrameRate:0];
-}
-
-- (void)addPullToRefreshActionHandler:(actionHandler)handler ProgressImagesGifName:(NSString *)progressGifName LoadingImagesGifName:(NSString *)loadingGifName ProgressScrollThreshold:(NSInteger)threshold
-{
-    UIImage *progressImage = [[UIImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath]  stringByAppendingPathComponent:progressGifName]];
-    UIImage *loadingImage = [[UIImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath]  stringByAppendingPathComponent:loadingGifName]];
-    
-    [self addPullToRefreshActionHandler:handler
-                         ProgressImages:progressImage.images
-                          LoadingImages:loadingImage.images
-                ProgressScrollThreshold:threshold
-                 LoadingImagesFrameRate:(NSInteger)ceilf(1.0/(loadingImage.duration/loadingImage.images.count))];
-}
-- (void)addPullToRefreshActionHandler:(actionHandler)handler ProgressImagesGifName:(NSString *)progressGifName LoadingImagesGifName:(NSString *)loadingGifName ProgressScrollThreshold:(NSInteger)threshold LoadingImageFrameRate:(NSInteger)frameRate
-{
-    UIImage *progressImage = [[UIImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath]  stringByAppendingPathComponent:progressGifName]];
-    UIImage *loadingImage = [[UIImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath]  stringByAppendingPathComponent:loadingGifName]];
-    
-    [self addPullToRefreshActionHandler:handler
-                         ProgressImages:progressImage.images
-                          LoadingImages:loadingImage.images
-                ProgressScrollThreshold:threshold
-                 LoadingImagesFrameRate:frameRate];
-}
-- (void)addPullToRefreshActionHandler:(actionHandler)handler ProgressImagesGifName:(NSString *)progressGifName ProgressScrollThreshold:(NSInteger)threshold
-{
-    UIImage *progressImage = [[UIImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath]  stringByAppendingPathComponent:progressGifName]]; //[UIImage imageNamed:progressGifName];
-
-    [self addPullToRefreshActionHandler:handler
-                         ProgressImages:progressImage.images
-                ProgressScrollThreshold:threshold];
-}
-
 - (void)addTopInsetInPortrait:(CGFloat)pInset TopInsetInLandscape:(CGFloat)lInset
 {
     self.pullToRefreshView.portraitTopInset = pInset;

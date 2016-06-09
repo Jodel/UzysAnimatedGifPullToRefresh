@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'UzysAnimatedGifPullToRefresh/UzysAnimatedGifPullToRefresh/Library'
   s.public_header_files = 'UzysAnimatedGifPullToRefresh/UzysAnimatedGifPullToRefresh/Library/*.h'
-  s.dependency 'AnimatedGIFImageSerialization', '~> 0.2.0'  
   s.ios.deployment_target = "6.0"
 
 end
